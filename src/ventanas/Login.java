@@ -8,12 +8,17 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-
+import java.sql.*;
+import clases.Conexion;
+import javax.swing.JOptionPane;
 /**
  *
  * @author PINKILORA
  */
 public class Login extends javax.swing.JFrame {
+    
+    public static String user = "";
+    String pass = "";
 
     /**
      * Creates new form Login
@@ -101,7 +106,15 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton_AccederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_AccederActionPerformed
-        // TODO add your handling code here:
+        user = txt_user.getText().trim();
+        pass = txt_pass.getText().trim();
+        
+        if(user.equals("") || pass.equals("")){
+            JOptionPane.showMessageDialog(null, "Debe llenar todos los campos");
+        }else{
+            
+        }
+        
     }//GEN-LAST:event_jButton_AccederActionPerformed
 
     /**

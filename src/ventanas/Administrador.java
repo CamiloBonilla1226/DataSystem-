@@ -14,7 +14,11 @@ public class Administrador extends javax.swing.JFrame {
      * Creates new form Administrador
      */
     public Administrador() {
+  
         initComponents();
+        setTitle("Administrador");
+        setLocationRelativeTo(null);
+        
     }
 
     /**

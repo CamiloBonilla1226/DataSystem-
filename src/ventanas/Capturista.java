@@ -15,6 +15,8 @@ public class Capturista extends javax.swing.JFrame {
      */
     public Capturista() {
         initComponents();
+        setTitle("Capturista");
+        setLocationRelativeTo(null);
     }
 
     /**
