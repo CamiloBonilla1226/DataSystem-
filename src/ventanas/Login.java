@@ -112,7 +112,39 @@ public class Login extends javax.swing.JFrame {
         if(user.equals("") || pass.equals("")){
             JOptionPane.showMessageDialog(null, "Debe llenar todos los campos");
         }else{
-            
+            try{
+                Connection cn = Conexion.conectar();
+                PreparedStatement pst = cn.prepareStatement(
+                            "select tipo_nivel, estatus from usuarios where username = '" + user
+                        + "' and password = '" + pass + "'");
+                
+                ResultSet rs = pst.executeQuery();
+                if(rs.next()){
+                    String tipo = rs.getString("tipo_nivel");
+                    String estatus = rs.getString("estatus");
+                    if(tipo.equalsIgnoreCase("Administrador")&& estatus.equalsIgnoreCase("Activo")){
+                        dispose(); //cierra esa interfaz
+                        new Administrador().setVisible(true);
+                        
+                    }else if(tipo.equalsIgnoreCase("Capturista")&& estatus.equalsIgnoreCase("Activo")){
+                        dispose(); //cierra esa interfaz
+                        new Capturista().setVisible(true);
+                    }else if(tipo.equalsIgnoreCase("Tecnico")&& estatus.equalsIgnoreCase("Activo")){
+                        dispose(); //cierra esa interfaz
+                        new Tecnico().setVisible(true);
+                    }else System.err.println("El usuario no está activo");
+                    
+                }else{
+                    JOptionPane.showMessageDialog(null, "Información incorrecta, intente de nuevo");
+                    txt_user.setText("");
+                    txt_pass.setText("");
+                }
+                        
+            }catch( SQLException e){
+                System.err.println("Error en el botón de Acceder");
+                JOptionPane.showMessageDialog(null, "Error del sistema, contacte con el administrador");
+                
+            }
         }
         
     }//GEN-LAST:event_jButton_AccederActionPerformed
