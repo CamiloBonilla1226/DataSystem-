@@ -54,6 +54,8 @@ public class Login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButton_Acceder = new javax.swing.JButton();
+        jLabel_Footer = new javax.swing.JLabel();
         txt_user = new javax.swing.JTextField();
         txt_pass = new javax.swing.JPasswordField();
         jLabel_Logo = new javax.swing.JLabel();
@@ -62,6 +64,21 @@ public class Login extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImage(getIconImage());
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jButton_Acceder.setBackground(new java.awt.Color(153, 153, 255));
+        jButton_Acceder.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jButton_Acceder.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_Acceder.setText("Acceder");
+        jButton_Acceder.setBorder(null);
+        jButton_Acceder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_AccederActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton_Acceder, new org.netbeans.lib.awtextra.AbsoluteConstraints(95, 420, 210, 35));
+
+        jLabel_Footer.setText("Creador por acbonilla");
+        getContentPane().add(jLabel_Footer, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 470, -1, -1));
 
         txt_user.setBackground(new java.awt.Color(153, 153, 255));
         txt_user.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -82,6 +99,10 @@ public class Login extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton_AccederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_AccederActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton_AccederActionPerformed
 
     /**
      * @param args the command line arguments
@@ -119,6 +140,8 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton_Acceder;
+    private javax.swing.JLabel jLabel_Footer;
     private javax.swing.JLabel jLabel_Logo;
     private javax.swing.JLabel jLabel_Wallpaper;
     private javax.swing.JPasswordField txt_pass;
