@@ -5,6 +5,7 @@
 package ventanas;
 
 import java.awt.Image;
+import java.awt.Toolkit;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
@@ -36,6 +37,13 @@ public class Login extends javax.swing.JFrame {
         jLabel_Logo.setIcon(icono_logo);
         this.repaint();
     }
+    
+    @Override
+    public Image getIconImage(){
+        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("images/icon.png"));
+        return retValue;
+        
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -52,6 +60,7 @@ public class Login extends javax.swing.JFrame {
         jLabel_Wallpaper = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(getIconImage());
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txt_user.setBackground(new java.awt.Color(153, 153, 255));
