@@ -5,7 +5,6 @@
 package ventanas;
 import clases.Conexion;
 import java.awt.Color;
-import static java.awt.Color.red;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.sql.*;
@@ -27,7 +26,7 @@ import javax.swing.border.SoftBevelBorder;
 public class RegistrarUsuario extends javax.swing.JFrame {
     String user;
     Border redBorder = BorderFactory.createLineBorder(Color.RED, 2);
-    Border whiteBorder = BorderFactory.createLineBorder(Color.WHITE, 2);
+    Border greenBorder = BorderFactory.createLineBorder(Color.GREEN, 2);
 
     
     /**
@@ -231,7 +230,7 @@ public class RegistrarUsuario extends javax.swing.JFrame {
         } else {
             txt_password.setBorder(softBevelBorder);
         }
-
+ 
         
         if(permiso_cmb==1){
             permisos_string = "Administrador";
@@ -248,8 +247,51 @@ public class RegistrarUsuario extends javax.swing.JFrame {
             ResultSet rs = pst.executeQuery();
             
             if(rs.next()){
+                txt_Username.setBorder(redBorder);
                 JOptionPane.showMessageDialog(null,"Nombre de usuario no disponible");
                 cn.close();
+            }else{
+                cn.close();
+                if(validacion==0){
+                    try{
+                        Connection cn2 = Conexion.conectar();
+                        PreparedStatement pst2 = cn2.prepareStatement(
+                        "insert into usuarios values (?,?,?,?,?,?,?,?,?)");
+                        
+                        pst2.setInt(1, 0);
+                        pst2.setString(2, nombre);
+                        pst2.setString(3, mail);
+                        pst2.setString(4,telefono);
+                        pst2.setString(5,username);
+                        pst2.setString(6,pass);
+                        pst2.setString(7,permisos_string);
+                        pst2.setString(8,"Activo");
+                        pst2.setString(9, user);
+                        
+                        pst2.executeUpdate();
+                        cn2.close();
+                        
+                        limpiar();
+                        
+                        txt_Email.setBorder(greenBorder);
+                        txt_nombre.setBorder(greenBorder);
+                        txt_telefono.setBorder(greenBorder);
+                        txt_Username.setBorder(greenBorder);
+                        txt_password.setBorder(greenBorder);
+                        
+                        JOptionPane.showMessageDialog(null, "Registro exitoso. ");
+                        this.dispose();
+
+                    }catch(SQLException e){
+                        System.err.println("Error al registrar usuario "+ e);
+                        JOptionPane.showMessageDialog(null, "ERROR AL REGISTRAR, contacta al administrador ");
+
+                    }
+                }else{
+                        JOptionPane.showMessageDialog(null, "Debe llenar todos los campos. ");
+
+                    
+                }
             }
         }catch(Exception e){
             System.err.println("Error en validar nombre de usurario "+e);
@@ -314,4 +356,14 @@ public class RegistrarUsuario extends javax.swing.JFrame {
     private javax.swing.JPasswordField txt_password;
     private javax.swing.JTextField txt_telefono;
     // End of variables declaration//GEN-END:variables
+    public void limpiar(){
+        txt_Email.setText("");
+        txt_nombre.setText("");
+        txt_telefono.setText("");
+        txt_Username.setText("");
+        txt_password.setText("");
+        cmb_niveles.setSelectedIndex(0);
+    }
+
 }
+
