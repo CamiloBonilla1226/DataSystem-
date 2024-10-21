@@ -4,12 +4,21 @@
  */
 package ventanas;
 import clases.Conexion;
+import java.awt.Color;
+import static java.awt.Color.red;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.sql.*;
+import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.Border;
+import javax.swing.border.SoftBevelBorder;
+
+
 
 /**
  *
@@ -17,7 +26,10 @@ import javax.swing.WindowConstants;
  */
 public class RegistrarUsuario extends javax.swing.JFrame {
     String user;
+    Border redBorder = BorderFactory.createLineBorder(Color.RED, 2);
+    Border whiteBorder = BorderFactory.createLineBorder(Color.WHITE, 2);
 
+    
     /**
      * Creates new form RegistrarUsuario
      */
@@ -147,7 +159,7 @@ public class RegistrarUsuario extends javax.swing.JFrame {
         txt_password.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         getContentPane().add(txt_password, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 130, 210, -1));
 
-        cmb_niveles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Capturista", "Tecnico", " " }));
+        cmb_niveles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Capturista", "Tecnico" }));
         cmb_niveles.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmb_nivelesActionPerformed(evt);
@@ -156,6 +168,11 @@ public class RegistrarUsuario extends javax.swing.JFrame {
         getContentPane().add(cmb_niveles, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, -1, -1));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add.png"))); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 180, 110, 100));
 
         jLabel8.setText("Creador por acbonilla");
@@ -168,6 +185,81 @@ public class RegistrarUsuario extends javax.swing.JFrame {
     private void cmb_nivelesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmb_nivelesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cmb_nivelesActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int permiso_cmb, validacion=0;
+        String nombre, mail, telefono, username, pass, permisos_string;
+        mail = txt_Email.getText().trim();
+        nombre = txt_nombre.getText().trim();
+        telefono = txt_telefono.getText().trim();
+        username = txt_Username.getText().trim();
+        pass = txt_password.getText().trim();
+        permiso_cmb = cmb_niveles.getSelectedIndex()+1;
+        Border softBevelBorder = new SoftBevelBorder(BevelBorder.RAISED); 
+        
+        if (mail.equals("")) {
+            validacion++;
+            txt_Email.setBorder(redBorder);
+        } else {
+            txt_Email.setBorder(softBevelBorder);
+        }
+
+        if (nombre.equals("")) {
+            validacion++;
+            txt_nombre.setBorder(redBorder);
+        } else {
+            txt_nombre.setBorder(softBevelBorder);
+        }
+
+        if (telefono.equals("")) {
+            txt_telefono.setBorder(redBorder);
+            validacion++;
+        } else {
+            txt_telefono.setBorder(softBevelBorder);
+        }
+
+        if (username.equals("")) {
+            validacion++;
+            txt_Username.setBorder(redBorder);
+        } else {
+            txt_Username.setBorder(softBevelBorder);
+        }
+
+        if (pass.equals("")) {
+            validacion++;
+            txt_password.setBorder(redBorder);
+        } else {
+            txt_password.setBorder(softBevelBorder);
+        }
+
+        
+        if(permiso_cmb==1){
+            permisos_string = "Administrador";
+        }else if(permiso_cmb==2){
+            permisos_string = "Capturista";
+        }else{
+            permisos_string = "Tecnico";
+        }
+        
+        try{
+            Connection cn = Conexion.conectar();
+            PreparedStatement pst = cn.prepareStatement("select username from usuarios where username = '" + username + "'");
+            
+            ResultSet rs = pst.executeQuery();
+            
+            if(rs.next()){
+                JOptionPane.showMessageDialog(null,"Nombre de usuario no disponible");
+                cn.close();
+            }
+        }catch(Exception e){
+            System.err.println("Error en validar nombre de usurario "+e);
+             JOptionPane.showMessageDialog(null,"CONTACTE CON ADMIN");
+            
+        }
+        
+        
+// TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
