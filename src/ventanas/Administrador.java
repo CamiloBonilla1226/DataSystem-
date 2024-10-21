@@ -95,6 +95,11 @@ public class Administrador extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jButton_Registrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/addUser.png"))); // NOI18N
+        jButton_Registrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_RegistrarActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton_Registrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 120, 100));
 
         jLabel_Name.setFont(new java.awt.Font("Arial", 1, 20)); // NOI18N
@@ -147,6 +152,13 @@ public class Administrador extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton_RegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_RegistrarActionPerformed
+        // TODO add your handling code here:
+        RegistrarUsuario registrar = new RegistrarUsuario();
+        registrar.setVisible(true);
+        
+    }//GEN-LAST:event_jButton_RegistrarActionPerformed
 
     /**
      * @param args the command line arguments

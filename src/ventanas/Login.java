@@ -10,6 +10,8 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import java.sql.*;
 import clases.Conexion;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 /**
  *
@@ -41,6 +43,41 @@ public class Login extends javax.swing.JFrame {
         Icon icono_logo = new ImageIcon(wallpaper_logo.getImage().getScaledInstance(jLabel_Logo.getWidth(), jLabel_Logo.getHeight(), Image.SCALE_DEFAULT));
         jLabel_Logo.setIcon(icono_logo);
         this.repaint();
+        
+         // Añadir KeyListener para el txt_user
+        txt_user.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent evt) {
+                if (evt.getKeyCode() == KeyEvent.VK_TAB) {
+                    txt_pass.requestFocus(); // Enfocar el campo de contraseña
+                    evt.consume(); // Evitar el comportamiento por defecto de tabulación
+                } else if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+                    jButton_Acceder.doClick(); // Simular el click del botón
+                }
+            }
+        });
+        
+        // Añadir KeyListener para el txt_pass
+        txt_pass.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent evt) {
+                if (evt.getKeyCode() == KeyEvent.VK_TAB) {
+                    jButton_Acceder.requestFocus(); // Enfocar el botón de acceder
+                    evt.consume(); // Evitar el comportamiento por defecto de tabulación
+                } else if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+                    jButton_Acceder.doClick(); // Simular el click del botón
+                }
+            }
+        });
+        
+         jButton_Acceder.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent evt) {
+                if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+                    jButton_Acceder.doClick(); // Simular el click del botón
+                }
+            }
+        });
     }
     
     @Override
