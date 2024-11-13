@@ -12,6 +12,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
@@ -44,6 +45,39 @@ public class GestionarUsuarios extends javax.swing.JFrame {
         Icon icono = new ImageIcon(wallpaper.getImage().getScaledInstance(jLabel_Wallpaper.getWidth(),jLabel_Wallpaper.getHeight(), Image.SCALE_DEFAULT));
         jLabel_Wallpaper.setIcon(icono); //Acomoda ancho y largo
         this.repaint();
+        
+        try {
+            Connection cn = Conexion.conectar();
+            PreparedStatement pst = cn.prepareStatement("select id_usuario, nombre_usuario, username, tipo_nivel, estatus from usuarios ");
+            ResultSet rs = pst.executeQuery();
+            
+            jTable_usuarios = new JTable(model);
+            jScrollPane1.setViewportView(jTable_usuarios);
+            
+            model.addColumn(" ");
+            model.addColumn("Nombre");
+            model.addColumn("Username");
+            model.addColumn("Permisos");
+            model.addColumn("Estatus");
+           
+           while(rs.next()){  //rs.next es para verificar que la bd haya encontrado algo 
+               Object[] fila = new Object[5];
+               for (int i=0; i<5; i++){
+                   fila[i] = rs.getObject(i+1);
+                   
+               }
+               model.addRow( fila);
+               
+           }
+           cn.close();
+           
+            
+        }catch(SQLException e){
+            
+            System.err.println("Error al llenar tabla");
+            System.err.println(e);
+             JOptionPane.showMessageDialog(null,"CONTACTE CON ADMIN");
+        }
         
     }
     
