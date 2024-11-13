@@ -79,7 +79,23 @@ public class GestionarUsuarios extends javax.swing.JFrame {
              JOptionPane.showMessageDialog(null,"CONTACTE CON ADMIN");
         }
         
+        jTable_usuarios.addMouseListener(new MouseAdapter() {
+            
+            @Override 
+            public void mouseClicked(MouseEvent e){
+                int fila_point = jTable_usuarios.rowAtPoint(e.getPoint());
+                int columan_point = 2;  //para recuperar el username de cuando se da click
+                
+                if(fila_point > -1){
+                    user_update = (String)model.getValueAt(fila_point,columan_point);
+                    informacionUsuario info = new informacionUsuario();
+                    info.setVisible(true);
+                }
+            }
+            
+        });
     }
+    
     
     @Override
     public Image getIconImage(){
