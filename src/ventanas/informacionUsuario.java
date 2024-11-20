@@ -5,18 +5,25 @@
 package ventanas;
 import java.sql.*;
 import clases.Conexion;
+import java.awt.Color;
 import java.awt.Image;
 import java.awt.Toolkit;
+import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.Border;
+import javax.swing.border.SoftBevelBorder;
 
 /**
  *
  * @author PINKILORA
  */
 public class informacionUsuario extends javax.swing.JFrame {
+    Border redBorder = BorderFactory.createLineBorder(Color.RED, 2);
+    Border greenBorder = BorderFactory.createLineBorder(Color.GREEN, 2);
     String user ="", user_update = "";
     int ID;
     
@@ -239,10 +246,97 @@ public class informacionUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_registradoporActionPerformed
 
     private void jButton_ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ActualizarActionPerformed
-
-        int permisos_cmb, estatus_cmb, validacion = 0;
         
-        // TODO add your handling code here:
+         Border softBevelBorder = new SoftBevelBorder(BevelBorder.RAISED); 
+        int permisos_cmb, estatus_cmb, validacion = 0;
+        String nombre, mail, telefono, username, pass, permisos_string = "", estatus_string = "";
+        mail = txt_mail.getText().trim();
+        username = txt_username.getText().trim();
+        nombre = txt_nombre.getText().trim();
+        telefono = txt_telefono.getText().trim();
+        permisos_cmb = cmb_niveles.getSelectedIndex() + 1;
+        estatus_cmb = cmb_estatus.getSelectedIndex() + 1;
+              
+        if(mail.equals("")){
+            validacion++;
+            txt_mail.setBorder(redBorder);
+        } else {
+            txt_mail.setBorder(softBevelBorder);
+        }
+        
+        if(username.equals("")){
+            validacion++;
+            txt_username.setBorder(redBorder);
+        } else {
+            txt_username.setBorder(softBevelBorder);
+        }
+        
+        if(nombre.equals("")){
+            validacion++;
+            txt_nombre.setBorder(redBorder);
+        } else {
+            txt_nombre.setBorder(softBevelBorder);
+        }
+        
+        if(telefono.equals("")){
+            validacion++;
+            txt_telefono.setBorder(redBorder);
+        } else {
+            txt_telefono.setBorder(softBevelBorder);
+        }
+        
+        if (validacion == 0) {
+            
+            if(permisos_cmb==1){
+                permisos_string = "Administrador";
+            } else if (permisos_cmb==2){
+                permisos_string = "Capturista";
+            } else if (permisos_cmb == 3){
+                permisos_string = "Tecnico";
+            }
+            
+            if(estatus_cmb == 1){
+                estatus_string = "Activo";
+            } else if (estatus_cmb == 2){
+                estatus_string = "Inactivo";
+            }
+            
+            try {
+               Connection cn = Conexion.conectar();
+               PreparedStatement pst = cn.prepareStatement("select username from usuarios where username = '" + username + "' and not id_usuario = '" + ID + "'");
+               
+               ResultSet rs = pst.executeQuery();
+               
+                if (rs.next()) {
+                    txt_username.setBorder(redBorder);
+                    JOptionPane.showMessageDialog(null,"Nombre de usuario no disponible");
+                    cn.close();
+                    
+                } else {
+                    Connection cn2 = Conexion.conectar();
+                    PreparedStatement pst2 = cn2.prepareStatement("update usuarios set nombre_usuario = ?, email = ?, telefono=?, username=?, tipo_nivel=?, estatus=? "
+                    + "where id_usuario = '" + ID + "'");
+                    
+                    pst2.setString(1, nombre);
+                    pst2.setString(2, mail);
+                    pst2.setString(3, telefono);
+                    pst2.setString(4, username);
+                    pst2.setString(5, permisos_string);
+                    pst2.setString(6, estatus_string);
+                    
+                    pst2.executeUpdate();
+                    cn2.close();
+                    JOptionPane.showMessageDialog(null,"Modificación correcta");
+                }
+                
+            } catch (SQLException e) {
+                System.err.println("Error al actualizar en "+ e);              
+            }
+            
+        } else {
+            JOptionPane.showMessageDialog(null,"Debes llenar todos los campos");
+        }
+        
     }//GEN-LAST:event_jButton_ActualizarActionPerformed
 
     private void txt_telefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_telefonoActionPerformed
