@@ -239,6 +239,9 @@ public class informacionUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_registradoporActionPerformed
 
     private void jButton_ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ActualizarActionPerformed
+
+        int permisos_cmb, estatus_cmb, validacion = 0;
+        
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton_ActualizarActionPerformed
 
