@@ -9,6 +9,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 
 /**
@@ -42,6 +43,30 @@ public class informacionUsuario extends javax.swing.JFrame {
           this.repaint();
           
           jLabel_titulo.setText("Información del usuario "+ user_update);
+          
+          try {
+            Connection cn = Conexion.conectar();
+            PreparedStatement pst = cn.prepareStatement( "select * from usuarios where username = '" + user_update + "'" );
+            ResultSet rs = pst.executeQuery();
+            
+            if(rs.next()){
+                ID = rs.getInt("id_usuario");
+                txt_nombre.setText(rs.getString("nombre_usuario"));
+                txt_mail.setText(rs.getString("email"));
+                txt_telefono.setText(rs.getString("telefono"));
+                txt_username.setText(rs.getString("username"));
+                txt_registradopor.setText(rs.getString("registrado_por"));
+                
+                cmb_niveles.setSelectedItem(rs.getString("tipo_nivel"));
+                cmb_estatus.setSelectedItem(rs.getString("estatus"));
+            }
+            cn.close();
+            
+                
+        } catch (SQLException e) {
+             System.err.println("Error en cargar usurario "+e);
+             JOptionPane.showMessageDialog(null,"CONTACTE CON ADMIN");
+        }
           
     }
     
@@ -84,7 +109,9 @@ public class informacionUsuario extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel_titulo.setBackground(new java.awt.Color(255, 255, 255));
         jLabel_titulo.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel_titulo.setForeground(new java.awt.Color(255, 255, 255));
         jLabel_titulo.setText("Información del usuario");
         getContentPane().add(jLabel_titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 0, -1, -1));
 
@@ -131,30 +158,40 @@ public class informacionUsuario extends javax.swing.JFrame {
 
         txt_nombre.setBackground(new java.awt.Color(153, 153, 255));
         txt_nombre.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        txt_nombre.setForeground(new java.awt.Color(255, 255, 255));
         txt_nombre.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         txt_nombre.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         getContentPane().add(txt_nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 210, -1));
 
         txt_mail.setBackground(new java.awt.Color(153, 153, 255));
         txt_mail.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        txt_mail.setForeground(new java.awt.Color(255, 255, 255));
         txt_mail.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         txt_mail.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         getContentPane().add(txt_mail, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 210, -1));
 
         txt_telefono.setBackground(new java.awt.Color(153, 153, 255));
         txt_telefono.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        txt_telefono.setForeground(new java.awt.Color(255, 255, 255));
         txt_telefono.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         txt_telefono.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        txt_telefono.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_telefonoActionPerformed(evt);
+            }
+        });
         getContentPane().add(txt_telefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 210, -1));
 
         txt_username.setBackground(new java.awt.Color(153, 153, 255));
         txt_username.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        txt_username.setForeground(new java.awt.Color(255, 255, 255));
         txt_username.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         txt_username.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         getContentPane().add(txt_username, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 70, 210, -1));
 
         txt_registradopor.setBackground(new java.awt.Color(153, 153, 255));
         txt_registradopor.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        txt_registradopor.setForeground(new java.awt.Color(255, 255, 255));
         txt_registradopor.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_registradopor.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txt_registradopor.setEnabled(false);
@@ -204,6 +241,10 @@ public class informacionUsuario extends javax.swing.JFrame {
     private void jButton_ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ActualizarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton_ActualizarActionPerformed
+
+    private void txt_telefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_telefonoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_telefonoActionPerformed
 
     /**
      * @param args the command line arguments
