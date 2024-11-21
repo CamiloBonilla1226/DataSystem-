@@ -232,6 +232,11 @@ public class informacionUsuario extends javax.swing.JFrame {
         jButton_RestauraPass.setForeground(new java.awt.Color(255, 255, 255));
         jButton_RestauraPass.setText("Restaurar Password");
         jButton_RestauraPass.setBorder(null);
+        jButton_RestauraPass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_RestauraPassActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton_RestauraPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 300, 210, 35));
 
         jLabel2.setText("Creado por acbonilla");
@@ -342,6 +347,13 @@ public class informacionUsuario extends javax.swing.JFrame {
     private void txt_telefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_telefonoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_telefonoActionPerformed
+
+    private void jButton_RestauraPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_RestauraPassActionPerformed
+
+        Password restaurar = new Password();
+        restaurar.setVisible(true);
+            // TODO add your handling code here:
+    }//GEN-LAST:event_jButton_RestauraPassActionPerformed
 
     /**
      * @param args the command line arguments
