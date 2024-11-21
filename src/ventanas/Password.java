@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ventanas;
+
 import java.sql.*;
 import clases.Conexion;
 import java.awt.Color;
@@ -16,40 +17,44 @@ import javax.swing.WindowConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 import javax.swing.border.SoftBevelBorder;
+
 /**
  *
  * @author PINKILORA
  */
 public class Password extends javax.swing.JFrame {
-    String user="", user_update="";
+
+    String user = "", user_update = "";
+    Border redBorder = BorderFactory.createLineBorder(Color.RED, 2);
+
     /**
      * Creates new form Password
      */
     public Password() {
         initComponents();
         user = Login.user;
-        user_update=GestionarUsuarios.user_update;
-        
-        setTitle("Cambio de password para "+ user_update);
-         setSize(630,450);
-         setResizable(false);
-         setLocationRelativeTo(null);
-         
-         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-         
-          ImageIcon wallpaper = new ImageIcon("src/images/wallpaperPrincipal.jpg");
-          Icon icono = new ImageIcon(wallpaper.getImage().getScaledInstance(jLabel_Wallpaper.getWidth(),jLabel_Wallpaper.getHeight(), Image.SCALE_DEFAULT));
-          jLabel_Wallpaper.setIcon(icono); //Acomoda ancho y largo
-          this.repaint();
+        user_update = GestionarUsuarios.user_update;
+
+        setTitle("Cambio de password para " + user_update);
+        setSize(360, 260);
+        setResizable(false);
+        setLocationRelativeTo(null);
+
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+
+        ImageIcon wallpaper = new ImageIcon("src/images/wallpaperPrincipal.jpg");
+        Icon icono = new ImageIcon(wallpaper.getImage().getScaledInstance(jLabel_Wallpaper.getWidth(), jLabel_Wallpaper.getHeight(), Image.SCALE_DEFAULT));
+        jLabel_Wallpaper.setIcon(icono); //Acomoda ancho y largo
+        this.repaint();
     }
 
     @Override
-    public Image getIconImage(){
+    public Image getIconImage() {
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("images/icon.png"));
         return retValue;
-        
+
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -116,6 +121,40 @@ public class Password extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton_RestauraPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_RestauraPassActionPerformed
+
+        Border softBevelBorder = new SoftBevelBorder(BevelBorder.RAISED);
+
+        String newpass, pass;
+        pass = txt_password.getText().trim();
+        newpass = txt_password_confirmar.getText().trim();
+
+        if (pass.equals("") || newpass.equals("")) {
+            txt_password.setBorder(redBorder);
+            txt_password_confirmar.setBorder(redBorder);
+            JOptionPane.showMessageDialog(null, "Modificación incorrecta, hay campos vacios.");
+        } else {
+            if (pass.equals(newpass)) {
+                try {
+                    Connection cn = Conexion.conectar();
+                    PreparedStatement pst = cn.prepareStatement("update usuarios set password=? where username = '" + user_update + "'");
+                    pst.setString(1, pass);
+                    pst.executeUpdate();
+                    cn.close();
+                    
+                    txt_password.setBorder(softBevelBorder);
+                    txt_password_confirmar.setBorder(softBevelBorder);
+
+                     JOptionPane.showMessageDialog(null, "Modificación exitosa.");
+                     this.dispose();
+                } catch (SQLException e) {
+                    System.out.println("Error en password " + e);
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden.");
+            }
+        }
+
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton_RestauraPassActionPerformed
 

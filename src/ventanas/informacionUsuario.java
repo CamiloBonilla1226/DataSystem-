@@ -252,7 +252,7 @@ public class informacionUsuario extends javax.swing.JFrame {
 
     private void jButton_ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ActualizarActionPerformed
         
-         Border softBevelBorder = new SoftBevelBorder(BevelBorder.RAISED); 
+        Border softBevelBorder = new SoftBevelBorder(BevelBorder.RAISED); 
         int permisos_cmb, estatus_cmb, validacion = 0;
         String nombre, mail, telefono, username, pass, permisos_string = "", estatus_string = "";
         mail = txt_mail.getText().trim();
