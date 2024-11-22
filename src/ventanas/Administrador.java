@@ -119,6 +119,11 @@ public class Administrador extends javax.swing.JFrame {
         getContentPane().add(jButton_Creatividad, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 70, 120, 100));
 
         jButton_Capturista.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/capturista.png"))); // NOI18N
+        jButton_Capturista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_CapturistaActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton_Capturista, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, 120, 100));
 
         jButton_Tecnico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/tecnico.png"))); // NOI18N
@@ -171,6 +176,13 @@ public class Administrador extends javax.swing.JFrame {
        
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton_GestionarActionPerformed
+
+    private void jButton_CapturistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_CapturistaActionPerformed
+
+        Capturista cap = new Capturista();
+        cap.setVisible(true);
+            // TODO add your handling code here:
+    }//GEN-LAST:event_jButton_CapturistaActionPerformed
 
     /**
      * @param args the command line arguments
