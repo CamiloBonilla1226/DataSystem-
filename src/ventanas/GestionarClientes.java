@@ -27,7 +27,7 @@ public class GestionarClientes extends javax.swing.JFrame {
     
     String user="";
     public static int IDcliente_update=0;
-   // public static String user_update = "";  // importante para el cambio de info entre interfaces
+    public static String user_update = "";  // importante para el cambio de info entre interfaces
     DefaultTableModel model = new DefaultTableModel(); //filas y columnas
     
     /**
@@ -86,11 +86,11 @@ public class GestionarClientes extends javax.swing.JFrame {
             @Override 
             public void mouseClicked(MouseEvent e){
                 int fila_point = jTable_clientes.rowAtPoint(e.getPoint());
-                int columan_point = 2;  //para recuperar el username de cuando se da click
+                int columan_point = 1;  //para recuperar el username de cuando se da click
                 
                 if(fila_point > -1){
                     user_update = (String)model.getValueAt(fila_point,columan_point);
-                    informacionUsuario info = new informacionUsuario();
+                    InformacionCliente info = new InformacionCliente();
                     info.setVisible(true);
                 }
             }

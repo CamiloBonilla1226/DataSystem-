@@ -22,7 +22,7 @@ import javax.swing.border.SoftBevelBorder;
  *
  * @author PINKILORA
  */
-public class informacionUsuario extends javax.swing.JFrame {
+public class InformacionCliente extends javax.swing.JFrame {
 
     Border redBorder = BorderFactory.createLineBorder(Color.RED, 2);
     Border greenBorder = BorderFactory.createLineBorder(Color.GREEN, 2);
@@ -30,15 +30,15 @@ public class informacionUsuario extends javax.swing.JFrame {
     int ID;
 
     /**
-     * Creates new form informacionUsuario
+     * Creates new form InformacionCliente
      */
-    public informacionUsuario() {
+    public InformacionCliente() {
         initComponents();
         user = Login.user;
-        user_update = GestionarUsuarios.user_update;
+        user_update = GestionarClientes.user_update;
 
-        setTitle("Usiarios registrados - Sesion de " + user);
-        setSize(630, 450);
+        setTitle("Clientes registrados - Sesion de " + user);
+        setSize(630, 391);
         setResizable(false);
         setLocationRelativeTo(null);
 
@@ -49,23 +49,21 @@ public class informacionUsuario extends javax.swing.JFrame {
         jLabel_Wallpaper.setIcon(icono); //Acomoda ancho y largo
         this.repaint();
 
-        jLabel_titulo.setText("Información del usuario " + user_update);
+        jLabel_titulo.setText("Información del cliente " + user_update);
 
         try {
             Connection cn = Conexion.conectar();
-            PreparedStatement pst = cn.prepareStatement("select * from usuarios where username = '" + user_update + "'");
+            PreparedStatement pst = cn.prepareStatement("select * from clientes where nombre_cliente = '" + user_update + "'");
             ResultSet rs = pst.executeQuery();
 
             if (rs.next()) {
-                ID = rs.getInt("id_usuario");
-                txt_nombre.setText(rs.getString("nombre_usuario"));
-                txt_mail.setText(rs.getString("email"));
-                txt_telefono.setText(rs.getString("telefono"));
-                txt_username.setText(rs.getString("username"));
-                txt_registradopor.setText(rs.getString("registrado_por"));
+                ID = rs.getInt("id_cliente");
+                txt_nombre.setText(rs.getString("nombre_cliente"));
+                txt_mail.setText(rs.getString("email_cliente"));
+                txt_telefono.setText(rs.getString("tel_cliente"));
+                txt_direccion.setText(rs.getString("dir_cliente"));
+                txt_registradopor.setText(rs.getString("ultima_modificacion"));
 
-                cmb_niveles.setSelectedItem(rs.getString("tipo_nivel"));
-                cmb_estatus.setSelectedItem(rs.getString("estatus"));
             }
             cn.close();
 
@@ -73,14 +71,6 @@ public class informacionUsuario extends javax.swing.JFrame {
             System.err.println("Error en cargar usurario " + e);
             JOptionPane.showMessageDialog(null, "CONTACTE CON ADMIN");
         }
-
-    }
-
-    @Override
-    public Image getIconImage() {
-        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("images/icon.png"));
-        return retValue;
-
     }
 
     /**
@@ -96,19 +86,14 @@ public class informacionUsuario extends javax.swing.JFrame {
         jLabel_Nombre = new javax.swing.JLabel();
         jLabel_Nombre1 = new javax.swing.JLabel();
         jLabel_Nombre2 = new javax.swing.JLabel();
-        jLabel_Nombre3 = new javax.swing.JLabel();
         jLabel_Nombre4 = new javax.swing.JLabel();
-        jLabel_Nombre5 = new javax.swing.JLabel();
         jLabel_Nombre6 = new javax.swing.JLabel();
         txt_nombre = new javax.swing.JTextField();
         txt_mail = new javax.swing.JTextField();
         txt_telefono = new javax.swing.JTextField();
-        txt_username = new javax.swing.JTextField();
+        txt_direccion = new javax.swing.JTextField();
         txt_registradopor = new javax.swing.JTextField();
-        cmb_estatus = new javax.swing.JComboBox<>();
-        cmb_niveles = new javax.swing.JComboBox<>();
         jButton_Actualizar = new javax.swing.JButton();
-        jButton_RestauraPass = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel_Wallpaper = new javax.swing.JLabel();
 
@@ -118,7 +103,7 @@ public class informacionUsuario extends javax.swing.JFrame {
         jLabel_titulo.setBackground(new java.awt.Color(255, 255, 255));
         jLabel_titulo.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel_titulo.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel_titulo.setText("Información del usuario");
+        jLabel_titulo.setText("Información del cliente");
         getContentPane().add(jLabel_titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 0, -1, -1));
 
         jLabel_Nombre.setBackground(new java.awt.Color(255, 255, 255));
@@ -138,29 +123,17 @@ public class informacionUsuario extends javax.swing.JFrame {
         jLabel_Nombre2.setText("Telefono: ");
         getContentPane().add(jLabel_Nombre2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, -1, -1));
 
-        jLabel_Nombre3.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel_Nombre3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel_Nombre3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel_Nombre3.setText("Permisos de: ");
-        getContentPane().add(jLabel_Nombre3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, -1, -1));
-
         jLabel_Nombre4.setBackground(new java.awt.Color(255, 255, 255));
         jLabel_Nombre4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel_Nombre4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel_Nombre4.setText("Username: ");
+        jLabel_Nombre4.setText("Direccion:");
         getContentPane().add(jLabel_Nombre4, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 50, -1, -1));
-
-        jLabel_Nombre5.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel_Nombre5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel_Nombre5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel_Nombre5.setText("Estatus: ");
-        getContentPane().add(jLabel_Nombre5, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 110, -1, -1));
 
         jLabel_Nombre6.setBackground(new java.awt.Color(255, 255, 255));
         jLabel_Nombre6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel_Nombre6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel_Nombre6.setText("Registrado por: ");
-        getContentPane().add(jLabel_Nombre6, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 170, -1, -1));
+        jLabel_Nombre6.setText("Ultima modificacion:");
+        getContentPane().add(jLabel_Nombre6, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 110, -1, -1));
 
         txt_nombre.setBackground(new java.awt.Color(153, 153, 255));
         txt_nombre.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
@@ -188,12 +161,12 @@ public class informacionUsuario extends javax.swing.JFrame {
         });
         getContentPane().add(txt_telefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 210, -1));
 
-        txt_username.setBackground(new java.awt.Color(153, 153, 255));
-        txt_username.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
-        txt_username.setForeground(new java.awt.Color(255, 255, 255));
-        txt_username.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        txt_username.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(txt_username, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 70, 210, -1));
+        txt_direccion.setBackground(new java.awt.Color(153, 153, 255));
+        txt_direccion.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        txt_direccion.setForeground(new java.awt.Color(255, 255, 255));
+        txt_direccion.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txt_direccion.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        getContentPane().add(txt_direccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 70, 210, -1));
 
         txt_registradopor.setBackground(new java.awt.Color(153, 153, 255));
         txt_registradopor.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
@@ -206,44 +179,30 @@ public class informacionUsuario extends javax.swing.JFrame {
                 txt_registradoporActionPerformed(evt);
             }
         });
-        getContentPane().add(txt_registradopor, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 190, 210, -1));
-
-        cmb_estatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Activo", "Inactivo" }));
-        getContentPane().add(cmb_estatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 130, -1, -1));
-
-        cmb_niveles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Capturista", "Tecnico" }));
-        getContentPane().add(cmb_niveles, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, -1, -1));
+        getContentPane().add(txt_registradopor, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 130, 210, -1));
 
         jButton_Actualizar.setBackground(new java.awt.Color(153, 153, 255));
         jButton_Actualizar.setFont(new java.awt.Font("Arial Narrow", 0, 18)); // NOI18N
         jButton_Actualizar.setForeground(new java.awt.Color(255, 255, 255));
-        jButton_Actualizar.setText("Actualizar usuario");
+        jButton_Actualizar.setText("Actualizar cliente");
         jButton_Actualizar.setBorder(null);
         jButton_Actualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_ActualizarActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton_Actualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 250, 210, 35));
-
-        jButton_RestauraPass.setBackground(new java.awt.Color(153, 153, 255));
-        jButton_RestauraPass.setFont(new java.awt.Font("Arial Narrow", 0, 18)); // NOI18N
-        jButton_RestauraPass.setForeground(new java.awt.Color(255, 255, 255));
-        jButton_RestauraPass.setText("Restaurar Password");
-        jButton_RestauraPass.setBorder(null);
-        jButton_RestauraPass.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_RestauraPassActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton_RestauraPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 300, 210, 35));
+        getContentPane().add(jButton_Actualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 190, 210, 35));
 
         jLabel2.setText("Creado por acbonilla");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 370, -1, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 270, -1, -1));
         getContentPane().add(jLabel_Wallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 630, 450));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txt_telefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_telefonoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_telefonoActionPerformed
 
     private void txt_registradoporActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_registradoporActionPerformed
         // TODO add your handling code here:
@@ -252,14 +211,12 @@ public class informacionUsuario extends javax.swing.JFrame {
     private void jButton_ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ActualizarActionPerformed
 
         Border softBevelBorder = new SoftBevelBorder(BevelBorder.RAISED);
-        int permisos_cmb, estatus_cmb, validacion = 0;
-        String nombre, mail, telefono, username, pass, permisos_string = "", estatus_string = "";
+        int validacion = 0;
+        String nombre, mail, telefono, direccion;
         mail = txt_mail.getText().trim();
-        username = txt_username.getText().trim();
+        direccion = txt_direccion.getText().trim();
         nombre = txt_nombre.getText().trim();
         telefono = txt_telefono.getText().trim();
-        permisos_cmb = cmb_niveles.getSelectedIndex() + 1;
-        estatus_cmb = cmb_estatus.getSelectedIndex() + 1;
 
         if (mail.equals("")) {
             validacion++;
@@ -268,11 +225,11 @@ public class informacionUsuario extends javax.swing.JFrame {
             txt_mail.setBorder(softBevelBorder);
         }
 
-        if (username.equals("")) {
+        if (direccion.equals("")) {
             validacion++;
-            txt_username.setBorder(redBorder);
+            txt_direccion.setBorder(redBorder);
         } else {
-            txt_username.setBorder(softBevelBorder);
+            txt_direccion.setBorder(softBevelBorder);
         }
 
         if (nombre.equals("")) {
@@ -290,51 +247,24 @@ public class informacionUsuario extends javax.swing.JFrame {
         }
 
         if (validacion == 0) {
-
-            if (permisos_cmb == 1) {
-                permisos_string = "Administrador";
-            } else if (permisos_cmb == 2) {
-                permisos_string = "Capturista";
-            } else if (permisos_cmb == 3) {
-                permisos_string = "Tecnico";
-            }
-
-            if (estatus_cmb == 1) {
-                estatus_string = "Activo";
-            } else if (estatus_cmb == 2) {
-                estatus_string = "Inactivo";
-            }
-
             try {
-                Connection cn = Conexion.conectar();
-                PreparedStatement pst = cn.prepareStatement("select username from usuarios where username = '" + username + "' and not id_usuario = '" + ID + "'");
+                Connection cn2 = Conexion.conectar();
+                PreparedStatement pst2 = cn2.prepareStatement("update clientes set nombre_cliente = ?, email_cliente = ?, tel_cliente=?, dir_cliente=? "
+                        + "where id_cliente = '" + ID + "'");
 
-                ResultSet rs = pst.executeQuery();
+                pst2.setString(1, nombre);
+                pst2.setString(2, mail);
+                pst2.setString(3, telefono);
+                pst2.setString(4, direccion);
+                
 
-                if (rs.next()) {
-                    txt_username.setBorder(redBorder);
-                    JOptionPane.showMessageDialog(null, "Nombre de usuario no disponible");
-                    cn.close();
-
-                } else {
-                    Connection cn2 = Conexion.conectar();
-                    PreparedStatement pst2 = cn2.prepareStatement("update usuarios set nombre_usuario = ?, email = ?, telefono=?, username=?, tipo_nivel=?, estatus=? "
-                            + "where id_usuario = '" + ID + "'");
-
-                    pst2.setString(1, nombre);
-                    pst2.setString(2, mail);
-                    pst2.setString(3, telefono);
-                    pst2.setString(4, username);
-                    pst2.setString(5, permisos_string);
-                    pst2.setString(6, estatus_string);
-
-                    pst2.executeUpdate();
-                    cn2.close();
-                    JOptionPane.showMessageDialog(null, "Modificación correcta");
-                }
-
+                pst2.executeUpdate();
+                cn2.close();
+                JOptionPane.showMessageDialog(null, "Modificación correcta");
             } catch (SQLException e) {
-                System.err.println("Error al actualizar en " + e);
+
+                System.err.println("Error en cargar cliente " + e);
+                JOptionPane.showMessageDialog(null, "CONTACTE CON ADMIN");
             }
 
         } else {
@@ -342,17 +272,6 @@ public class informacionUsuario extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jButton_ActualizarActionPerformed
-
-    private void txt_telefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_telefonoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_telefonoActionPerformed
-
-    private void jButton_RestauraPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_RestauraPassActionPerformed
-
-        Password restaurar = new Password();
-        restaurar.setVisible(true);
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton_RestauraPassActionPerformed
 
     /**
      * @param args the command line arguments
@@ -371,43 +290,38 @@ public class informacionUsuario extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(informacionUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InformacionCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(informacionUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InformacionCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(informacionUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InformacionCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(informacionUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InformacionCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new informacionUsuario().setVisible(true);
+                new InformacionCliente().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> cmb_estatus;
-    private javax.swing.JComboBox<String> cmb_niveles;
     private javax.swing.JButton jButton_Actualizar;
-    private javax.swing.JButton jButton_RestauraPass;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel_Nombre;
     private javax.swing.JLabel jLabel_Nombre1;
     private javax.swing.JLabel jLabel_Nombre2;
-    private javax.swing.JLabel jLabel_Nombre3;
     private javax.swing.JLabel jLabel_Nombre4;
-    private javax.swing.JLabel jLabel_Nombre5;
     private javax.swing.JLabel jLabel_Nombre6;
     private javax.swing.JLabel jLabel_Wallpaper;
     private javax.swing.JLabel jLabel_titulo;
+    private javax.swing.JTextField txt_direccion;
     private javax.swing.JTextField txt_mail;
     private javax.swing.JTextField txt_nombre;
     private javax.swing.JTextField txt_registradopor;
     private javax.swing.JTextField txt_telefono;
-    private javax.swing.JTextField txt_username;
     // End of variables declaration//GEN-END:variables
 }
