@@ -140,6 +140,7 @@ public class Capturista extends javax.swing.JFrame {
         RegistrarClientes regis = new RegistrarClientes();
         regis.setVisible(true);
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_jButton_RegistrarClienteActionPerformed
 
     /**

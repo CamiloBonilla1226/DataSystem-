@@ -25,13 +25,14 @@ import javax.swing.border.SoftBevelBorder;
 public class RegistrarClientes extends javax.swing.JFrame {
 
     String user;
+    Border redBorder = BorderFactory.createLineBorder(Color.RED, 2);
+    Border greenBorder = BorderFactory.createLineBorder(Color.GREEN, 2);
 
     /**
      * Creates new form RegistrarClientes
      */
     public RegistrarClientes() {
-        Border redBorder = BorderFactory.createLineBorder(Color.RED, 2);
-        Border greenBorder = BorderFactory.createLineBorder(Color.GREEN, 2);
+
         initComponents();
         user = Login.user;
         setTitle("Registrar nuevo cliente - Sesion de " + user);
@@ -154,7 +155,79 @@ public class RegistrarClientes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+        int validacion = 0;
+        String nombre, mail, telefono, direccion;
+        mail = txt_mail.getText().trim();
+        nombre = txt_nombre.getText().trim();
+        telefono = txt_telefono.getText().trim();
+        direccion = txt_direccion.getText().trim();
+
+        Border softBevelBorder = new SoftBevelBorder(BevelBorder.RAISED);
+
+        if (mail.equals("")) {
+            validacion++;
+            txt_mail.setBorder(redBorder);
+        } else {
+            txt_mail.setBorder(softBevelBorder);
+        }
+
+        if (nombre.equals("")) {
+            validacion++;
+            txt_nombre.setBorder(redBorder);
+        } else {
+            txt_nombre.setBorder(softBevelBorder);
+        }
+
+        if (telefono.equals("")) {
+            txt_telefono.setBorder(redBorder);
+            validacion++;
+        } else {
+            txt_telefono.setBorder(softBevelBorder);
+        }
+
+        if (direccion.equals("")) {
+            validacion++;
+            txt_direccion.setBorder(redBorder);
+        } else {
+            txt_direccion.setBorder(softBevelBorder);
+        }
+
+        if (validacion == 0) {
+            try {
+                Connection cn2 = Conexion.conectar();
+                PreparedStatement pst2 = cn2.prepareStatement(
+                        "insert into clientes values (?,?,?,?,?,?)");
+
+                pst2.setInt(1, 0);
+                pst2.setString(2, nombre);
+                pst2.setString(3, mail);
+                pst2.setString(4, telefono);
+                pst2.setString(5, direccion);
+                pst2.setString(6, user);
+                
+
+                pst2.executeUpdate();
+                cn2.close();
+
+                limpiar();
+
+                txt_mail.setBorder(greenBorder);
+                txt_nombre.setBorder(greenBorder);
+                txt_telefono.setBorder(greenBorder);
+                txt_direccion.setBorder(greenBorder);
+                
+                JOptionPane.showMessageDialog(null, "Registro exitoso. ");
+                this.dispose();
+
+            } catch (SQLException e) {
+                System.err.println("Error al registrar cliente " + e);
+                JOptionPane.showMessageDialog(null, "ERROR AL REGISTRAR, contacta al administrador ");
+
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe llenar todos los campos. ");
+
+        }
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -209,4 +282,10 @@ public class RegistrarClientes extends javax.swing.JFrame {
     private javax.swing.JTextField txt_nombre;
     private javax.swing.JTextField txt_telefono;
     // End of variables declaration//GEN-END:variables
+    public void limpiar(){
+        txt_mail.setText("");
+        txt_nombre.setText("");
+        txt_telefono.setText("");
+        txt_direccion.setText("");
+    }
 }
