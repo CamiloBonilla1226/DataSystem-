@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
+import static ventanas.GestionarUsuarios.user_update;
 
 
 /**
@@ -45,7 +46,56 @@ public class GestionarClientes extends javax.swing.JFrame {
         ImageIcon wallpaper = new ImageIcon("src/images/wallpaperPrincipal.jpg");
         Icon icono = new ImageIcon(wallpaper.getImage().getScaledInstance(jLabel_Wallpaper.getWidth(),jLabel_Wallpaper.getHeight(), Image.SCALE_DEFAULT));
         jLabel_Wallpaper.setIcon(icono); //Acomoda ancho y largo
+        
         this.repaint();
+        
+         try {
+            Connection cn = Conexion.conectar();
+            PreparedStatement pst = cn.prepareStatement("select id_cliente, nombre_cliente, tel_cliente, dir_cliente from clientes ");
+            ResultSet rs = pst.executeQuery();
+            
+            jTable_clientes = new JTable(model);
+            jScrollPane1.setViewportView(jTable_clientes);
+            
+            model.addColumn(" ");
+            model.addColumn("Nombre");
+            model.addColumn("Telefono");
+            model.addColumn("Direccion");
+           
+           while(rs.next()){  //rs.next es para verificar que la bd haya encontrado algo 
+               Object[] fila = new Object[4];
+               for (int i=0; i<4; i++){
+                   fila[i] = rs.getObject(i+1);
+                   
+               }
+               model.addRow( fila);
+               
+           }
+           cn.close();
+           
+            
+        }catch(SQLException e){
+            
+            System.err.println("Error al llenar tabla");
+            System.err.println(e);
+             JOptionPane.showMessageDialog(null,"CONTACTE CON ADMIN");
+        }
+         
+         jTable_clientes.addMouseListener(new MouseAdapter() {
+            
+            @Override 
+            public void mouseClicked(MouseEvent e){
+                int fila_point = jTable_clientes.rowAtPoint(e.getPoint());
+                int columan_point = 2;  //para recuperar el username de cuando se da click
+                
+                if(fila_point > -1){
+                    user_update = (String)model.getValueAt(fila_point,columan_point);
+                    informacionUsuario info = new informacionUsuario();
+                    info.setVisible(true);
+                }
+            }
+            
+        });
     }
     
     @Override
