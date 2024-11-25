@@ -112,6 +112,11 @@ public class Capturista extends javax.swing.JFrame {
         getContentPane().add(jButton_RegistrarCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, 120, 100));
 
         jButton_GestionarClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/informationuser.png"))); // NOI18N
+        jButton_GestionarClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_GestionarClientesActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton_GestionarClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 80, 120, 100));
 
         jButton_Imprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/impresora.png"))); // NOI18N
@@ -142,6 +147,12 @@ public class Capturista extends javax.swing.JFrame {
         // TODO add your handling code here:
         
     }//GEN-LAST:event_jButton_RegistrarClienteActionPerformed
+
+    private void jButton_GestionarClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_GestionarClientesActionPerformed
+        GestionarClientes gcli = new GestionarClientes();
+        gcli.setVisible(true);
+// TODO add your handling code here:
+    }//GEN-LAST:event_jButton_GestionarClientesActionPerformed
 
     /**
      * @param args the command line arguments
