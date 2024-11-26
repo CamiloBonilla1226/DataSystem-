@@ -38,7 +38,7 @@ public class InformacionCliente extends javax.swing.JFrame {
         user_update = GestionarClientes.user_update;
 
         setTitle("Clientes registrados - Sesion de " + user);
-        setSize(630, 391);
+        setSize(630, 450);
         setResizable(false);
         setLocationRelativeTo(null);
 
@@ -82,6 +82,8 @@ public class InformacionCliente extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable_equipos = new javax.swing.JTable();
         jLabel_titulo = new javax.swing.JLabel();
         jLabel_Nombre = new javax.swing.JLabel();
         jLabel_Nombre1 = new javax.swing.JLabel();
@@ -95,10 +97,27 @@ public class InformacionCliente extends javax.swing.JFrame {
         txt_registradopor = new javax.swing.JTextField();
         jButton_Actualizar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        jButton_RegistarEquipo = new javax.swing.JButton();
+        jButton_ImprimirReporte = new javax.swing.JButton();
         jLabel_Wallpaper = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jTable_equipos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable_equipos);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 68, 380, 170));
 
         jLabel_titulo.setBackground(new java.awt.Color(255, 255, 255));
         jLabel_titulo.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -127,13 +146,13 @@ public class InformacionCliente extends javax.swing.JFrame {
         jLabel_Nombre4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel_Nombre4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel_Nombre4.setText("Direccion:");
-        getContentPane().add(jLabel_Nombre4, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 50, -1, -1));
+        getContentPane().add(jLabel_Nombre4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, -1, -1));
 
         jLabel_Nombre6.setBackground(new java.awt.Color(255, 255, 255));
         jLabel_Nombre6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel_Nombre6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel_Nombre6.setText("Ultima modificacion:");
-        getContentPane().add(jLabel_Nombre6, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 110, -1, -1));
+        getContentPane().add(jLabel_Nombre6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, -1, -1));
 
         txt_nombre.setBackground(new java.awt.Color(153, 153, 255));
         txt_nombre.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
@@ -166,7 +185,7 @@ public class InformacionCliente extends javax.swing.JFrame {
         txt_direccion.setForeground(new java.awt.Color(255, 255, 255));
         txt_direccion.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         txt_direccion.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(txt_direccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 70, 210, -1));
+        getContentPane().add(txt_direccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 210, -1));
 
         txt_registradopor.setBackground(new java.awt.Color(153, 153, 255));
         txt_registradopor.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
@@ -179,7 +198,7 @@ public class InformacionCliente extends javax.swing.JFrame {
                 txt_registradoporActionPerformed(evt);
             }
         });
-        getContentPane().add(txt_registradopor, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 130, 210, -1));
+        getContentPane().add(txt_registradopor, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 210, -1));
 
         jButton_Actualizar.setBackground(new java.awt.Color(153, 153, 255));
         jButton_Actualizar.setFont(new java.awt.Font("Arial Narrow", 0, 18)); // NOI18N
@@ -191,10 +210,25 @@ public class InformacionCliente extends javax.swing.JFrame {
                 jButton_ActualizarActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton_Actualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 190, 210, 35));
+        getContentPane().add(jButton_Actualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 300, 210, 35));
 
         jLabel2.setText("Creado por acbonilla");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 270, -1, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 390, -1, -1));
+
+        jButton_RegistarEquipo.setBackground(new java.awt.Color(153, 153, 255));
+        jButton_RegistarEquipo.setFont(new java.awt.Font("Arial Narrow", 0, 18)); // NOI18N
+        jButton_RegistarEquipo.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_RegistarEquipo.setText("Registrar equipo");
+        jButton_RegistarEquipo.setBorder(null);
+        jButton_RegistarEquipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_RegistarEquipoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton_RegistarEquipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 250, 210, 35));
+
+        jButton_ImprimirReporte.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/impresora.png"))); // NOI18N
+        getContentPane().add(jButton_ImprimirReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 240, 120, 100));
         getContentPane().add(jLabel_Wallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 630, 450));
 
         pack();
@@ -273,6 +307,13 @@ public class InformacionCliente extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton_ActualizarActionPerformed
 
+    private void jButton_RegistarEquipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_RegistarEquipoActionPerformed
+
+        Password restaurar = new Password();
+        restaurar.setVisible(true);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton_RegistarEquipoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -310,6 +351,8 @@ public class InformacionCliente extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_Actualizar;
+    private javax.swing.JButton jButton_ImprimirReporte;
+    private javax.swing.JButton jButton_RegistarEquipo;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel_Nombre;
     private javax.swing.JLabel jLabel_Nombre1;
@@ -318,6 +361,8 @@ public class InformacionCliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel_Nombre6;
     private javax.swing.JLabel jLabel_Wallpaper;
     private javax.swing.JLabel jLabel_titulo;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable_equipos;
     private javax.swing.JTextField txt_direccion;
     private javax.swing.JTextField txt_mail;
     private javax.swing.JTextField txt_nombre;
