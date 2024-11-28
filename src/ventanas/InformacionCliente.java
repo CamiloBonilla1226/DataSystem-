@@ -131,6 +131,12 @@ public class InformacionCliente extends javax.swing.JFrame {
                
     }
 
+     @Override
+    public Image getIconImage(){
+        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("images/icon.png"));
+        return retValue;
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -366,9 +372,9 @@ public class InformacionCliente extends javax.swing.JFrame {
 
     private void jButton_RegistarEquipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_RegistarEquipoActionPerformed
 
-        Password restaurar = new Password();
-        restaurar.setVisible(true);
-        // TODO add your handling code here:
+        RegistrarEquipo reg = new RegistrarEquipo();
+        reg.setVisible(true);
+        
     }//GEN-LAST:event_jButton_RegistarEquipoActionPerformed
 
     /**
