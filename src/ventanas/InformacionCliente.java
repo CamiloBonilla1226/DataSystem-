@@ -9,14 +9,21 @@ import clases.Conexion;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.BorderFactory;
+import javax.swing.DefaultButtonModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.WindowConstants;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 import javax.swing.border.SoftBevelBorder;
+import static ventanas.GestionarClientes.IDcliente_update;
+import static ventanas.GestionarUsuarios.user_update;
 
 /**
  *
@@ -28,6 +35,9 @@ public class InformacionCliente extends javax.swing.JFrame {
     Border greenBorder = BorderFactory.createLineBorder(Color.GREEN, 2);
     String user = "", user_update = "";
     int ID;
+    DefaultTableModel model = new DefaultTableModel();
+    int IDcliente = 0;
+    public static int IDequipo = 0;
 
     /**
      * Creates new form InformacionCliente
@@ -36,6 +46,7 @@ public class InformacionCliente extends javax.swing.JFrame {
         initComponents();
         user = Login.user;
         user_update = GestionarClientes.user_update;
+        IDcliente = GestionarClientes.IDcliente_update;
 
         setTitle("Clientes registrados - Sesion de " + user);
         setSize(630, 450);
@@ -53,7 +64,7 @@ public class InformacionCliente extends javax.swing.JFrame {
 
         try {
             Connection cn = Conexion.conectar();
-            PreparedStatement pst = cn.prepareStatement("select * from clientes where nombre_cliente = '" + user_update + "'");
+            PreparedStatement pst = cn.prepareStatement("select * from clientes where id_cliente = '" + IDcliente + "'");
             ResultSet rs = pst.executeQuery();
 
             if (rs.next()) {
@@ -71,6 +82,53 @@ public class InformacionCliente extends javax.swing.JFrame {
             System.err.println("Error en cargar usurario " + e);
             JOptionPane.showMessageDialog(null, "CONTACTE CON ADMIN");
         }
+
+        try {
+            Connection cn = Conexion.conectar();
+            PreparedStatement pst = cn.prepareStatement("select id_equipo, tipo_equipo, marca, estatus from equipos where id_cliente = '" + IDcliente + "'");
+            ResultSet rs = pst.executeQuery();
+
+            jTable_equipos = new JTable(model);
+            jScrollPane1.setViewportView(jTable_equipos);
+
+            model.addColumn("ID equipo");
+            model.addColumn("Tipo de equipo");
+            model.addColumn("Marca");
+            model.addColumn("Estatus");
+
+             while(rs.next()){
+                Object[] fila = new Object[4];
+                
+                for (int i = 0; i < 4; i++) {
+                    fila[i] = rs.getObject(i + 1);
+                }
+                model.addRow(fila);                
+            }
+            cn.close();
+
+        } catch (Exception e) {
+
+            System.err.println("Error en el llenado de equipos " + e);
+            JOptionPane.showMessageDialog(null, "CONTACTE CON ADMIN");
+
+        }
+
+        jTable_equipos.addMouseListener(new MouseAdapter() {
+            
+            @Override 
+            public void mouseClicked(MouseEvent e){
+                int fila_point = jTable_equipos.rowAtPoint(e.getPoint());
+                int columan_point = 0;  //para recuperar el username de cuando se da click
+                
+                if(fila_point > -1){
+                    IDequipo = (int)model.getValueAt(fila_point,columan_point);
+                    InformacionCliente info = new InformacionCliente();
+                    info.setVisible(true);
+                }
+            }
+            
+        });
+               
     }
 
     /**
@@ -290,7 +348,6 @@ public class InformacionCliente extends javax.swing.JFrame {
                 pst2.setString(2, mail);
                 pst2.setString(3, telefono);
                 pst2.setString(4, direccion);
-                
 
                 pst2.executeUpdate();
                 cn2.close();
@@ -369,4 +426,5 @@ public class InformacionCliente extends javax.swing.JFrame {
     private javax.swing.JTextField txt_registradopor;
     private javax.swing.JTextField txt_telefono;
     // End of variables declaration//GEN-END:variables
+
 }

@@ -86,10 +86,10 @@ public class GestionarClientes extends javax.swing.JFrame {
             @Override 
             public void mouseClicked(MouseEvent e){
                 int fila_point = jTable_clientes.rowAtPoint(e.getPoint());
-                int columan_point = 1;  //para recuperar el username de cuando se da click
+                int columan_point = 0;  //para recuperar el username de cuando se da click
                 
                 if(fila_point > -1){
-                    user_update = (String)model.getValueAt(fila_point,columan_point);
+                    IDcliente_update = (int)model.getValueAt(fila_point,columan_point);
                     InformacionCliente info = new InformacionCliente();
                     info.setVisible(true);
                 }
