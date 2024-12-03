@@ -54,7 +54,7 @@ public class RegistrarEquipo extends javax.swing.JFrame {
         }
         
         setTitle("Registrar nuevo equipo para " + nom_cliente);
-        setSize(630, 445);
+        setSize(650, 455);
         setResizable(false);
         setLocationRelativeTo(null);
 
