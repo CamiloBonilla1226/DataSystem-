@@ -23,36 +23,40 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 import javax.swing.border.SoftBevelBorder;
 import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  *
  * @author PINKILORA
  */
 public class RegistrarEquipo extends javax.swing.JFrame {
-    
+
+    Border redBorder = BorderFactory.createLineBorder(Color.RED, 2);
+    Border greenBorder = BorderFactory.createLineBorder(Color.GREEN, 2);
     int IDcliente = 0;
-    String user ="", nom_cliente="";
-    
+    String user = "", nom_cliente = "";
+
     /**
      * Creates new form RegistrarEquipo
      */
     public RegistrarEquipo() {
         initComponents();
-        user=Login.user;
+        user = Login.user;
         IDcliente = GestionarClientes.IDcliente_update;
-        
+
         try {
             Connection cn = Conexion.conectar();
             PreparedStatement pst = cn.prepareStatement("select nombre_cliente from clientes where id_cliente = '" + IDcliente + "'");
             ResultSet rs = pst.executeQuery();
-            
-            if(rs.next()){
+
+            if (rs.next()) {
                 nom_cliente = rs.getString("nombre_cliente");
             }
         } catch (SQLException e) {
             System.err.println("Error en cargar usurario " + e);
         }
-        
+
         setTitle("Registrar nuevo equipo para " + nom_cliente);
         setSize(650, 455);
         setResizable(false);
@@ -65,14 +69,14 @@ public class RegistrarEquipo extends javax.swing.JFrame {
         jLabel_Wallpaper.setIcon(icono); //Acomoda ancho y largo
         this.repaint();
 
-       txt_nombreCliente.setText(nom_cliente);
+        txt_nombreCliente.setText(nom_cliente);
     }
-    
-     @Override
-    public Image getIconImage(){
+
+    @Override
+    public Image getIconImage() {
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("images/icon.png"));
         return retValue;
-        
+
     }
 
     /**
@@ -194,9 +198,76 @@ public class RegistrarEquipo extends javax.swing.JFrame {
 
     private void jButton_RegistarEquipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_RegistarEquipoActionPerformed
 
-        Password restaurar = new Password();
-        restaurar.setVisible(true);
-        // TODO add your handling code here:
+        int validacion = 0;
+        String tipo_equipo, marca, modelo, num_serie, dia_ingreso, mes_ingreso, annio_ingreso, estatus, observaciones;
+        Border softBevelBorder = new SoftBevelBorder(BevelBorder.RAISED);
+
+        tipo_equipo = cmb_tipoequipo.getSelectedItem().toString();
+        marca = cmb_marca.getSelectedItem().toString();
+        modelo = txt_modelo.getText().trim();
+        num_serie = txt_num_serie.getText().trim();
+        observaciones = jTextPane_observaciones.getText();
+        estatus = "Nuevo ingreso";
+
+        Calendar calendar = Calendar.getInstance();
+
+        dia_ingreso = Integer.toString(calendar.get(Calendar.DATE));
+        mes_ingreso = Integer.toString(calendar.get(Calendar.MONTH));
+        annio_ingreso = Integer.toString(calendar.get(Calendar.YEAR));
+
+        if (modelo.equals("")) {
+            validacion++;
+            txt_modelo.setBorder(redBorder);
+        } else {
+            txt_modelo.setBorder(softBevelBorder);
+        }
+        
+        if (num_serie.equals("")) {
+            validacion++;
+            txt_num_serie.setBorder(redBorder);
+        } else {
+            txt_num_serie.setBorder(softBevelBorder);
+        }
+        
+        if (observaciones.equals("")) {
+            jTextPane_observaciones.setText("Sin observaciones");
+         }
+            if (validacion == 0) {
+                try {
+                    Connection cn = Conexion.conectar();
+                    PreparedStatement pst = cn.prepareStatement("insert into equipos values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                    
+                    pst.setInt(1,0);
+                    pst.setInt(2, IDcliente);
+                    pst.setString(3, tipo_equipo);
+                    pst.setString(4, marca);
+                    pst.setString(5, modelo);
+                    pst.setString(6, num_serie);
+                    pst.setString(7, dia_ingreso);
+                    pst.setString(8, mes_ingreso);
+                    pst.setString(9, annio_ingreso);
+                    pst.setString(10, observaciones);
+                    pst.setString(11, estatus);
+                    pst.setString(12, user);
+                    pst.setString(13, "");
+                    pst.setString(14, "");
+                    
+                    pst.executeUpdate();
+                    cn.close();
+                    
+                     JOptionPane.showMessageDialog(null,"REGISTRO CORRECTO");
+                     this.dispose();
+                    
+                } catch (SQLException e) {
+                    System.err.println("Error en registrar el equipo");
+                    JOptionPane.showMessageDialog(null,"CONTACTE ADMIN");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null,"Llena todos los campos");
+            }
+          
+        
+
     }//GEN-LAST:event_jButton_RegistarEquipoActionPerformed
 
     /**
