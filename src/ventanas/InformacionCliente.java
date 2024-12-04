@@ -6,9 +6,15 @@ package ventanas;
 
 import java.sql.*;
 import clases.Conexion;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
@@ -393,7 +399,24 @@ public class InformacionCliente extends javax.swing.JFrame {
             PdfWriter.getInstance(documento, new FileOutputStream(ruta + "/Desktop/" + txt_nombre.getText().trim() + ".pdf"));
             
             com.itextpdf.text.Image header = com.itextpdf.text.Image.getInstance("src/images/BannerPDF.jpg");
+            header.scaleToFit(650,1000);
+            header.setAlignment(Chunk.ALIGN_CENTER);
             
+            Paragraph parrafo = new Paragraph();
+            parrafo.setAlignment(Paragraph.ALIGN_CENTER);
+            parrafo.add("Informacion del cliente. /n /n");
+            parrafo.setFont(FontFactory.getFont("Tahoma", 14, Font.BOLD, BaseColor.DARK_GRAY));
+            
+            documento.open();
+            documento.add(header);
+            documento.add(parrafo);
+            
+            PdfPTable tablaCliente = new PdfPTable(5);
+            tablaCliente.addCell("ID");
+            tablaCliente.addCell("Nombre");
+            tablaCliente.addCell("email");
+            tablaCliente.addCell("Télefono");
+            tablaCliente.addCell("Dirección");
             
         } catch (Exception e) {
         }
