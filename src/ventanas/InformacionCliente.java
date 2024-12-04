@@ -105,13 +105,13 @@ public class InformacionCliente extends javax.swing.JFrame {
             model.addColumn("Marca");
             model.addColumn("Estatus");
 
-             while(rs.next()){
+            while (rs.next()) {
                 Object[] fila = new Object[4];
-                
+
                 for (int i = 0; i < 4; i++) {
                     fila[i] = rs.getObject(i + 1);
                 }
-                model.addRow(fila);                
+                model.addRow(fila);
             }
             cn.close();
 
@@ -123,29 +123,30 @@ public class InformacionCliente extends javax.swing.JFrame {
         }
 
         jTable_equipos.addMouseListener(new MouseAdapter() {
-            
-            @Override 
-            public void mouseClicked(MouseEvent e){
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
                 int fila_point = jTable_equipos.rowAtPoint(e.getPoint());
                 int columan_point = 0;  //para recuperar el username de cuando se da click
-                
-                if(fila_point > -1){
-                    IDequipo = (int)model.getValueAt(fila_point,columan_point);
+
+                if (fila_point > -1) {
+                    IDequipo = (int) model.getValueAt(fila_point, columan_point);
                     InformacionCliente info = new InformacionCliente();
                     info.setVisible(true);
                 }
             }
-            
+
         });
-               
+
     }
 
-     @Override
-    public Image getIconImage(){
+    @Override
+    public Image getIconImage() {
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("images/icon.png"));
         return retValue;
-        
+
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -388,7 +389,7 @@ public class InformacionCliente extends javax.swing.JFrame {
 
         RegistrarEquipo reg = new RegistrarEquipo();
         reg.setVisible(true);
-        
+
     }//GEN-LAST:event_jButton_RegistarEquipoActionPerformed
 
     private void jButton_ImprimirReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ImprimirReporteActionPerformed
@@ -397,27 +398,56 @@ public class InformacionCliente extends javax.swing.JFrame {
         try {
             String ruta = System.getProperty("user.home");
             PdfWriter.getInstance(documento, new FileOutputStream(ruta + "/Desktop/" + txt_nombre.getText().trim() + ".pdf"));
-            
+
             com.itextpdf.text.Image header = com.itextpdf.text.Image.getInstance("src/images/BannerPDF.jpg");
-            header.scaleToFit(650,1000);
+            header.scaleToFit(650, 1000);
             header.setAlignment(Chunk.ALIGN_CENTER);
-            
+
             Paragraph parrafo = new Paragraph();
             parrafo.setAlignment(Paragraph.ALIGN_CENTER);
             parrafo.add("Informacion del cliente. /n /n");
             parrafo.setFont(FontFactory.getFont("Tahoma", 14, Font.BOLD, BaseColor.DARK_GRAY));
-            
+
             documento.open();
             documento.add(header);
             documento.add(parrafo);
-            
+
             PdfPTable tablaCliente = new PdfPTable(5);
             tablaCliente.addCell("ID");
             tablaCliente.addCell("Nombre");
             tablaCliente.addCell("email");
             tablaCliente.addCell("Télefono");
             tablaCliente.addCell("Dirección");
-            
+
+            try {
+
+                Connection cn = Conexion.conectar();
+                PreparedStatement pst = cn.prepareStatement("select * from clientes where id_cliente = '" + IDcliente + "'");
+
+                ResultSet rs = pst.executeQuery();
+
+                if (rs.next()) {
+                    do {
+                        tablaCliente.addCell(rs.getString(1));
+                        tablaCliente.addCell(rs.getString(2));
+                        tablaCliente.addCell(rs.getString(3));
+                        tablaCliente.addCell(rs.getString(4));
+                        tablaCliente.addCell(rs.getString(5));
+
+                    } while (rs.next());
+
+                    documento.add(tablaCliente);
+
+                }
+
+                Paragraph parrafo2 = new Paragraph();
+                parrafo2.setAlignment(Paragraph.ALIGN_CENTER);
+                parrafo2.add("");
+                parrafo2.setFont(FontFactory.getFont("Tahoma", 14, Font.BOLD, BaseColor.DARK_GRAY));
+            } catch (SQLException e) {
+                System.err.println("Error al obtener los datos del cliente");
+            }
+
         } catch (Exception e) {
         }
         // TODO add your handling code here:
