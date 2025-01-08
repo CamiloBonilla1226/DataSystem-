@@ -9,6 +9,7 @@ import clases.Conexion;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -20,6 +21,7 @@ import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultButtonModel;
 import javax.swing.Icon;
@@ -405,7 +407,7 @@ public class InformacionCliente extends javax.swing.JFrame {
 
             Paragraph parrafo = new Paragraph();
             parrafo.setAlignment(Paragraph.ALIGN_CENTER);
-            parrafo.add("Informacion del cliente. /n /n");
+            parrafo.add("Informacion del cliente. \n \n");
             parrafo.setFont(FontFactory.getFont("Tahoma", 14, Font.BOLD, BaseColor.DARK_GRAY));
 
             documento.open();
@@ -442,13 +444,52 @@ public class InformacionCliente extends javax.swing.JFrame {
 
                 Paragraph parrafo2 = new Paragraph();
                 parrafo2.setAlignment(Paragraph.ALIGN_CENTER);
-                parrafo2.add("");
+                parrafo2.add("\n \n Equipos Registrados. \n \n");
                 parrafo2.setFont(FontFactory.getFont("Tahoma", 14, Font.BOLD, BaseColor.DARK_GRAY));
-            } catch (SQLException e) {
-                System.err.println("Error al obtener los datos del cliente");
-            }
 
-        } catch (Exception e) {
+                documento.add(parrafo2);
+
+                PdfPTable tablaEquipos = new PdfPTable(4);
+
+                tablaEquipos.addCell("ID equipo");
+                tablaEquipos.addCell("Tippo");
+                tablaEquipos.addCell("Marca");
+                tablaEquipos.addCell("Estatus");
+
+                try {
+                    Connection cn2 = Conexion.conectar();
+                    PreparedStatement pst2 = cn2.prepareStatement
+                    ("select id_equipo, tipo_equipo, marca, estatus from equipos where id_cliente = '" + IDcliente_update + "'");
+                    
+                    ResultSet rs2 = pst2.executeQuery();
+                    
+                    if (rs2.next()) {
+                        do {                            
+                            tablaEquipos.addCell(rs2.getString(1));
+                            tablaEquipos.addCell(rs2.getString(2));
+                            tablaEquipos.addCell(rs2.getString(3));
+                            tablaEquipos.addCell(rs2.getString(4));
+                        } while (rs2.next());
+                        
+                        documento.add(tablaEquipos);
+                        
+                    }
+                    
+                    
+                } catch (SQLException e) {
+                    
+                    System.err.println("Error al cargar equipos " + e);
+                }
+            } catch (SQLException e) {
+                System.err.println("Error al obtener los datos del cliente" + e);
+            }
+            
+            documento.close();
+            JOptionPane.showMessageDialog(null, "Reporte creado correctamente");
+
+        } catch (DocumentException | IOException e) {
+            System.err.println("Error al cargar PDF " + e);
+            JOptionPane.showMessageDialog(null, "Error al generar PDF, contacte con el admin");
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton_ImprimirReporteActionPerformed
