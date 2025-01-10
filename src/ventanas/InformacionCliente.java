@@ -23,7 +23,6 @@ import java.awt.event.MouseEvent;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import javax.swing.BorderFactory;
-import javax.swing.DefaultButtonModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -34,7 +33,7 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 import javax.swing.border.SoftBevelBorder;
 import static ventanas.GestionarClientes.IDcliente_update;
-import static ventanas.GestionarUsuarios.user_update;
+
 
 /**
  *
@@ -133,7 +132,7 @@ public class InformacionCliente extends javax.swing.JFrame {
 
                 if (fila_point > -1) {
                     IDequipo = (int) model.getValueAt(fila_point, columan_point);
-                    InformacionCliente info = new InformacionCliente();
+                    InformacionEquipo info = new InformacionEquipo();
                     info.setVisible(true);
                 }
             }
@@ -199,7 +198,7 @@ public class InformacionCliente extends javax.swing.JFrame {
         jLabel_titulo.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel_titulo.setForeground(new java.awt.Color(255, 255, 255));
         jLabel_titulo.setText("Información del cliente");
-        getContentPane().add(jLabel_titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 0, -1, -1));
+        getContentPane().add(jLabel_titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
 
         jLabel_Nombre.setBackground(new java.awt.Color(255, 255, 255));
         jLabel_Nombre.setForeground(new java.awt.Color(255, 255, 255));

@@ -170,7 +170,12 @@ public class RegistrarEquipo extends javax.swing.JFrame {
         cmb_tipoequipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Laptop", "Desktop", "Impresora", "Multifuncional" }));
         getContentPane().add(cmb_tipoequipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, -1, -1));
 
-        cmb_marca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Asus", "Lenovo", "Hp", "Dell" }));
+        cmb_marca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lenovo", "Hp", "Acer", "Samsung", "Apple", "Dell", "Asus", "Brother", "Toshiba", "Xerox" }));
+        cmb_marca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmb_marcaActionPerformed(evt);
+            }
+        });
         getContentPane().add(cmb_marca, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, -1, -1));
 
         jScrollPane1.setViewportView(jTextPane_observaciones);
@@ -269,6 +274,10 @@ public class RegistrarEquipo extends javax.swing.JFrame {
         
 
     }//GEN-LAST:event_jButton_RegistarEquipoActionPerformed
+
+    private void cmb_marcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmb_marcaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmb_marcaActionPerformed
 
     /**
      * @param args the command line arguments

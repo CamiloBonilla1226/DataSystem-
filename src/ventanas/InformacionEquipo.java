@@ -4,17 +4,72 @@
  */
 package ventanas;
 
+import java.sql.*;
+import clases.Conexion;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import javax.swing.BorderFactory;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.WindowConstants;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.Border;
+import javax.swing.border.SoftBevelBorder;
+
 /**
  *
  * @author PINKILORA
  */
 public class InformacionEquipo extends javax.swing.JFrame {
 
+    int IDcliente = 0, IDequipo = 0;
+    String user = "", nom_cliente = "";
+
     /**
      * Creates new form InformacionEquipo
      */
     public InformacionEquipo() {
         initComponents();
+        user = Login.user;
+        
+        IDcliente = GestionarClientes.IDcliente_update;
+        IDequipo = InformacionCliente.IDequipo;
+        
+        setTitle("Clientes registrados - Sesion de " + user);
+        setSize(670, 530);
+        setResizable(false);
+        setLocationRelativeTo(null);
+
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+
+        ImageIcon wallpaper = new ImageIcon("src/images/wallpaperPrincipal.jpg");
+        Icon icono = new ImageIcon(wallpaper.getImage().getScaledInstance(jLabel_Wallpaper.getWidth(), jLabel_Wallpaper.getHeight(), Image.SCALE_DEFAULT));
+        jLabel_Wallpaper.setIcon(icono); //Acomoda ancho y largo
+        this.repaint();        
+    }
+    
+    @Override
+    public Image getIconImage() {
+        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("images/icon.png"));
+        return retValue;
+
     }
 
     /**
@@ -49,9 +104,12 @@ public class InformacionEquipo extends javax.swing.JFrame {
         jTextPane_observaciones = new javax.swing.JTextPane();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTextPane_comentarios = new javax.swing.JTextPane();
+        jButton_Actualizar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
         jLabel_Wallpaper = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(getIconImage());
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel_titulo.setBackground(new java.awt.Color(255, 255, 255));
@@ -165,10 +223,30 @@ public class InformacionEquipo extends javax.swing.JFrame {
         jScrollPane4.setViewportView(jTextPane_comentarios);
 
         getContentPane().add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 280, 330, 120));
+
+        jButton_Actualizar.setBackground(new java.awt.Color(153, 153, 255));
+        jButton_Actualizar.setFont(new java.awt.Font("Arial Narrow", 0, 18)); // NOI18N
+        jButton_Actualizar.setForeground(new java.awt.Color(255, 255, 255));
+        jButton_Actualizar.setText("Actualizar equipo");
+        jButton_Actualizar.setBorder(null);
+        jButton_Actualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_ActualizarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton_Actualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 400, 210, 35));
+
+        jLabel2.setText("Creado por acbonilla");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 460, -1, -1));
         getContentPane().add(jLabel_Wallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 670, 524));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton_ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ActualizarActionPerformed
+
+
+    }//GEN-LAST:event_jButton_ActualizarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -209,6 +287,8 @@ public class InformacionEquipo extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cmb_estatus;
     private javax.swing.JComboBox<String> cmb_marcas;
     private javax.swing.JComboBox<String> cmb_tipoequipo;
+    private javax.swing.JButton jButton_Actualizar;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel_Nombre;
     private javax.swing.JLabel jLabel_Nombre1;
     private javax.swing.JLabel jLabel_Nombre2;

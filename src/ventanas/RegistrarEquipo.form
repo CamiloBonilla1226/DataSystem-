@@ -238,14 +238,23 @@
     <Component class="javax.swing.JComboBox" name="cmb_marca">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="4">
-            <StringItem index="0" value="Asus"/>
-            <StringItem index="1" value="Lenovo"/>
-            <StringItem index="2" value="Hp"/>
-            <StringItem index="3" value="Dell"/>
+          <StringArray count="10">
+            <StringItem index="0" value="Lenovo"/>
+            <StringItem index="1" value="Hp"/>
+            <StringItem index="2" value="Acer"/>
+            <StringItem index="3" value="Samsung"/>
+            <StringItem index="4" value="Apple"/>
+            <StringItem index="5" value="Dell"/>
+            <StringItem index="6" value="Asus"/>
+            <StringItem index="7" value="Brother"/>
+            <StringItem index="8" value="Toshiba"/>
+            <StringItem index="9" value="Xerox"/>
           </StringArray>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmb_marcaActionPerformed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
