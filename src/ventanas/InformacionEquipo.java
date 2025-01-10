@@ -37,6 +37,18 @@ public class InformacionEquipo extends javax.swing.JFrame {
         jLabel_Nombre7 = new javax.swing.JLabel();
         jLabel_Nombre8 = new javax.swing.JLabel();
         jLabel_Nombre9 = new javax.swing.JLabel();
+        txt_nombrecliente = new javax.swing.JTextField();
+        txt_modelo = new javax.swing.JTextField();
+        txt_numserie = new javax.swing.JTextField();
+        txt_ultimamod = new javax.swing.JTextField();
+        txt_fecha = new javax.swing.JTextField();
+        cmb_tipoequipo = new javax.swing.JComboBox<>();
+        cmb_marcas = new javax.swing.JComboBox<>();
+        cmb_estatus = new javax.swing.JComboBox<>();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTextPane_observaciones = new javax.swing.JTextPane();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTextPane_comentarios = new javax.swing.JTextPane();
         jLabel_Wallpaper = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -97,6 +109,62 @@ public class InformacionEquipo extends javax.swing.JFrame {
         jLabel_Nombre9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel_Nombre9.setText("Comentarios y actualizacion del técnico:");
         getContentPane().add(jLabel_Nombre9, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 260, -1, -1));
+
+        txt_nombrecliente.setBackground(new java.awt.Color(153, 153, 255));
+        txt_nombrecliente.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        txt_nombrecliente.setForeground(new java.awt.Color(255, 255, 255));
+        txt_nombrecliente.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txt_nombrecliente.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        txt_nombrecliente.setEnabled(false);
+        getContentPane().add(txt_nombrecliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 210, -1));
+
+        txt_modelo.setBackground(new java.awt.Color(153, 153, 255));
+        txt_modelo.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        txt_modelo.setForeground(new java.awt.Color(255, 255, 255));
+        txt_modelo.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txt_modelo.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        getContentPane().add(txt_modelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 210, -1));
+
+        txt_numserie.setBackground(new java.awt.Color(153, 153, 255));
+        txt_numserie.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        txt_numserie.setForeground(new java.awt.Color(255, 255, 255));
+        txt_numserie.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txt_numserie.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        getContentPane().add(txt_numserie, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 320, 210, -1));
+
+        txt_ultimamod.setBackground(new java.awt.Color(153, 153, 255));
+        txt_ultimamod.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        txt_ultimamod.setForeground(new java.awt.Color(255, 255, 255));
+        txt_ultimamod.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txt_ultimamod.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        txt_ultimamod.setEnabled(false);
+        getContentPane().add(txt_ultimamod, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, 210, -1));
+
+        txt_fecha.setBackground(new java.awt.Color(153, 153, 255));
+        txt_fecha.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        txt_fecha.setForeground(new java.awt.Color(255, 255, 255));
+        txt_fecha.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txt_fecha.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        txt_fecha.setEnabled(false);
+        getContentPane().add(txt_fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 80, 180, -1));
+
+        cmb_tipoequipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Laptop", "Desktop", "Impresora", "Multifuncional" }));
+        getContentPane().add(cmb_tipoequipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, -1, -1));
+
+        cmb_marcas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lenovo", "Hp", "Acer", "Samsung", "Apple", "Dell", "Asus", "Brother", "Toshiba", "Xerox" }));
+        getContentPane().add(cmb_marcas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, -1, -1));
+
+        cmb_estatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nuevo ingreso ", "Reparado ", "No reparado", "En revision ", "Entregado" }));
+        getContentPane().add(cmb_estatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 80, -1, -1));
+
+        jScrollPane3.setViewportView(jTextPane_observaciones);
+
+        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 130, 330, 120));
+
+        jTextPane_comentarios.setEnabled(false);
+        jScrollPane4.setViewportView(jTextPane_comentarios);
+
+        getContentPane().add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 280, 330, 120));
         getContentPane().add(jLabel_Wallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 670, 524));
 
         pack();
@@ -138,6 +206,9 @@ public class InformacionEquipo extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cmb_estatus;
+    private javax.swing.JComboBox<String> cmb_marcas;
+    private javax.swing.JComboBox<String> cmb_tipoequipo;
     private javax.swing.JLabel jLabel_Nombre;
     private javax.swing.JLabel jLabel_Nombre1;
     private javax.swing.JLabel jLabel_Nombre2;
@@ -150,5 +221,14 @@ public class InformacionEquipo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel_Nombre9;
     private javax.swing.JLabel jLabel_Wallpaper;
     private javax.swing.JLabel jLabel_titulo;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JTextPane jTextPane_comentarios;
+    private javax.swing.JTextPane jTextPane_observaciones;
+    private javax.swing.JTextField txt_fecha;
+    private javax.swing.JTextField txt_modelo;
+    private javax.swing.JTextField txt_nombrecliente;
+    private javax.swing.JTextField txt_numserie;
+    private javax.swing.JTextField txt_ultimamod;
     // End of variables declaration//GEN-END:variables
 }
