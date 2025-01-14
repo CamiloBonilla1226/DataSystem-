@@ -48,50 +48,53 @@ public class InformacionEquipo extends javax.swing.JFrame {
     public InformacionEquipo() {
         initComponents();
         user = Login.user;
-        
+
         IDcliente = GestionarClientes.IDcliente_update;
         IDequipo = InformacionCliente.IDequipo;
-        
+
         try {
             Connection cn = Conexion.conectar();
             PreparedStatement pst = cn.prepareStatement("select nombre_cliente from clientes where id_cliente = '" + IDcliente + "'");
             ResultSet rs = pst.executeQuery();
-            
-            if(rs.next()){
+
+            if (rs.next()) {
                 nom_cliente = rs.getString("nombre_cliente");
-                
+
+            }
+        } catch (Exception e) {
+            System.err.println("Error al consulktar el nombre del cliente " + e);
+        }
+
+        try {
+            Connection cn = Conexion.conectar();
+            PreparedStatement pst = cn.prepareStatement("select * from equipos where id_equipo = '" + IDequipo + "'");
+
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                cmb_tipoequipo.setSelectedItem(rs.getString("tipo_equipo"));
+                cmb_marcas.setSelectedItem(rs.getString("marca"));
+                cmb_estatus.setSelectedItem(rs.getString("estatus"));
+                txt_modelo.setText(rs.getString("modelo"));
+                txt_numserie.setText(rs.getString("num_serie"));
+                txt_ultimamod.setText(rs.getString("ultima_modificacion"));
+
+                String dia = "", mes = "", annio = "";
+                dia = rs.getString("dia_ingreso");
+                mes = rs.getString("mes_ingreso");
+                annio = rs.getString("annio_ingreso");
+                txt_fecha.setText(dia + "del" + mes + "del" + annio);
+
+                jTextPane_observaciones.setText(rs.getString("observaciones"));
+                jTextPane_comentarios.setText(rs.getString("comentarios_tecnicos"));
+                jLabel_revision.setText("Comentarios y actualizacion del técnico: " + rs.getString("revision_tecnica_de"));
+
             }
         } catch (Exception e) {
             System.err.println("Error al consulktar el nombre del cliente " + e);
         }
         
-        try {
-            Connection cn = Conexion.conectar();
-            PreparedStatement pst = cn.prepareStatement("select * from equipos where id_equipo = '" + IDequipo + "'");
-            
-            ResultSet rs = pst.executeQuery();
-            
-            if(rs.next()){
-                cmb_tipoequipo.setSelectedItem(rs.getString("tipo_equipo"));
-                cmb_marcas.setSelectedItem(rs.getString("marca"));
-                cmb_estatus.setSelectedItem(rs.getString("estatus"));
-                txt_modelo.setText(rs.getString("num_serie"));
-                txt_numserie.setText(rs.getString("num_serie"));
-                txt_ultimamod.setText(rs.getString("ultima_modificacion"));
-                
-                String dia = "", mes = "", annio="";
-                dia = rs.getString("dia_ingreso");
-                mes = rs.getString("mes_ingreso");
-                annio = rs.getString("annio_ingreso");
-                txt_fecha.setText(dia + "del"+ mes + "del"+ annio);
-                
-                jTextPane_observaciones.setText(rs.getString("observaciones"));
-                jTextPane_comentarios.setText(rs.getString("comentarios"));
-                
-            }
-        } catch (Exception e) {
-        }
-        setTitle("Clientes registrados - Sesion de " + user);
+        setTitle("Equipo del cliente " + nom_cliente);
         setSize(670, 530);
         setResizable(false);
         setLocationRelativeTo(null);
@@ -101,9 +104,11 @@ public class InformacionEquipo extends javax.swing.JFrame {
         ImageIcon wallpaper = new ImageIcon("src/images/wallpaperPrincipal.jpg");
         Icon icono = new ImageIcon(wallpaper.getImage().getScaledInstance(jLabel_Wallpaper.getWidth(), jLabel_Wallpaper.getHeight(), Image.SCALE_DEFAULT));
         jLabel_Wallpaper.setIcon(icono); //Acomoda ancho y largo
-        this.repaint();        
+        this.repaint();
+        
+        txt_nombrecliente.setText(nom_cliente);
     }
-    
+
     @Override
     public Image getIconImage() {
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("images/icon.png"));
@@ -130,7 +135,7 @@ public class InformacionEquipo extends javax.swing.JFrame {
         jLabel_Nombre6 = new javax.swing.JLabel();
         jLabel_Nombre7 = new javax.swing.JLabel();
         jLabel_Nombre8 = new javax.swing.JLabel();
-        jLabel_Nombre9 = new javax.swing.JLabel();
+        jLabel_revision = new javax.swing.JLabel();
         txt_nombrecliente = new javax.swing.JTextField();
         txt_modelo = new javax.swing.JTextField();
         txt_numserie = new javax.swing.JTextField();
@@ -202,10 +207,10 @@ public class InformacionEquipo extends javax.swing.JFrame {
         jLabel_Nombre8.setText("Daño reportado y observaciones:");
         getContentPane().add(jLabel_Nombre8, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 110, -1, -1));
 
-        jLabel_Nombre9.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel_Nombre9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel_Nombre9.setText("Comentarios y actualizacion del técnico:");
-        getContentPane().add(jLabel_Nombre9, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 260, -1, -1));
+        jLabel_revision.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel_revision.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel_revision.setText("Comentarios y actualizacion del técnico:");
+        getContentPane().add(jLabel_revision, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 260, -1, -1));
 
         txt_nombrecliente.setBackground(new java.awt.Color(153, 153, 255));
         txt_nombrecliente.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
@@ -337,8 +342,8 @@ public class InformacionEquipo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel_Nombre6;
     private javax.swing.JLabel jLabel_Nombre7;
     private javax.swing.JLabel jLabel_Nombre8;
-    private javax.swing.JLabel jLabel_Nombre9;
     private javax.swing.JLabel jLabel_Wallpaper;
+    private javax.swing.JLabel jLabel_revision;
     private javax.swing.JLabel jLabel_titulo;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
