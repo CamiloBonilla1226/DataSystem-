@@ -52,6 +52,45 @@ public class InformacionEquipo extends javax.swing.JFrame {
         IDcliente = GestionarClientes.IDcliente_update;
         IDequipo = InformacionCliente.IDequipo;
         
+        try {
+            Connection cn = Conexion.conectar();
+            PreparedStatement pst = cn.prepareStatement("select nombre_cliente from clientes where id_cliente = '" + IDcliente + "'");
+            ResultSet rs = pst.executeQuery();
+            
+            if(rs.next()){
+                nom_cliente = rs.getString("nombre_cliente");
+                
+            }
+        } catch (Exception e) {
+            System.err.println("Error al consulktar el nombre del cliente " + e);
+        }
+        
+        try {
+            Connection cn = Conexion.conectar();
+            PreparedStatement pst = cn.prepareStatement("select * from equipos where id_equipo = '" + IDequipo + "'");
+            
+            ResultSet rs = pst.executeQuery();
+            
+            if(rs.next()){
+                cmb_tipoequipo.setSelectedItem(rs.getString("tipo_equipo"));
+                cmb_marcas.setSelectedItem(rs.getString("marca"));
+                cmb_estatus.setSelectedItem(rs.getString("estatus"));
+                txt_modelo.setText(rs.getString("num_serie"));
+                txt_numserie.setText(rs.getString("num_serie"));
+                txt_ultimamod.setText(rs.getString("ultima_modificacion"));
+                
+                String dia = "", mes = "", annio="";
+                dia = rs.getString("dia_ingreso");
+                mes = rs.getString("mes_ingreso");
+                annio = rs.getString("annio_ingreso");
+                txt_fecha.setText(dia + "del"+ mes + "del"+ annio);
+                
+                jTextPane_observaciones.setText(rs.getString("observaciones"));
+                jTextPane_comentarios.setText(rs.getString("comentarios"));
+                
+            }
+        } catch (Exception e) {
+        }
         setTitle("Clientes registrados - Sesion de " + user);
         setSize(670, 530);
         setResizable(false);
