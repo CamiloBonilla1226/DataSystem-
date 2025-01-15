@@ -38,7 +38,7 @@ import javax.swing.border.SoftBevelBorder;
  * @author PINKILORA
  */
 public class InformacionEquipo extends javax.swing.JFrame {
-
+     Border redBorder = BorderFactory.createLineBorder(Color.RED, 2);
     int IDcliente = 0, IDequipo = 0;
     String user = "", nom_cliente = "";
 
@@ -288,7 +288,43 @@ public class InformacionEquipo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton_ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ActualizarActionPerformed
-
+        int validacion = 0;
+        Border softBevelBorder = new SoftBevelBorder(BevelBorder.RAISED);
+        String tipo_equipo , marca, modelo, num_serie, estatus, observaciones;
+        
+        tipo_equipo = cmb_tipoequipo.getSelectedItem().toString();
+        marca = cmb_marcas.getSelectedItem().toString();
+        estatus = cmb_estatus.getSelectedItem().toString();
+        
+        modelo = txt_modelo.getText().trim();
+        num_serie = txt_numserie.getText().trim();
+        observaciones = jTextPane_observaciones.getText();
+        
+        if (modelo.equals("")) {
+            validacion++;
+            txt_modelo.setBorder(redBorder);
+        } else {
+            txt_modelo.setBorder(softBevelBorder);
+        }
+        if ( num_serie.equals("")) {
+            validacion++;
+            txt_numserie.setBorder(redBorder);
+        } else {
+            txt_numserie.setBorder(softBevelBorder);
+        }
+        if (observaciones.equals("")) {
+            jTextPane_observaciones.setText("Sin validaciones");
+        }
+        
+        if (validacion == 0) {
+            try {
+                Connection cn = Conexion.conectar();
+                PreparedStatement pst = cn.prepareStatement("select * from equipos where id_equipo = '" + IDequipo + "'");
+            } catch (Exception e) {
+            }
+            
+        }
+        
 
     }//GEN-LAST:event_jButton_ActualizarActionPerformed
 
