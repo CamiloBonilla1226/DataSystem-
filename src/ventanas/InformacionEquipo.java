@@ -319,10 +319,33 @@ public class InformacionEquipo extends javax.swing.JFrame {
         if (validacion == 0) {
             try {
                 Connection cn = Conexion.conectar();
-                PreparedStatement pst = cn.prepareStatement("select * from equipos where id_equipo = '" + IDequipo + "'");
-            } catch (Exception e) {
+                PreparedStatement pst = cn.prepareStatement("update equipos set tipo_equipo=?, marca=?, modelo=?,"
+                        + "num_serie=?, observaciones=?, estatus=?, ultima_modificacion=?" +"where id=equipo= '"+IDequipo + "'");
+                
+               pst.setString(1, tipo_equipo);
+               pst.setString(2, marca);
+               pst.setString(3, modelo);
+               pst.setString(4, num_serie);
+               pst.setString(5, observaciones);
+               pst.setString(6, estatus);
+               pst.setString(7, user);
+               
+               pst.executeUpdate();
+               cn.close();
+               
+               Limpiar();
+               
+               JOptionPane.showMessageDialog(null, "Actualizacion correcta");
+               this.dispose();
+               
+               
+            } catch (SQLException e) {
+                System.err.println("Error al actualizar equipo " + e);
+                
             }
             
+        }else{
+            JOptionPane.showMessageDialog(null, "Debes llenar todos los campos");
         }
         
 
@@ -391,4 +414,13 @@ public class InformacionEquipo extends javax.swing.JFrame {
     private javax.swing.JTextField txt_numserie;
     private javax.swing.JTextField txt_ultimamod;
     // End of variables declaration//GEN-END:variables
+public void limpiar(){
+        txt_nombrecliente.setText("");
+        txt_fecha.setText("");
+        txt_modelo.setText("");
+        txt_numserie.setText("");
+        jTextPane_observaciones.setText("");
+        
+    }
+
 }
