@@ -320,7 +320,7 @@ public class InformacionEquipo extends javax.swing.JFrame {
             try {
                 Connection cn = Conexion.conectar();
                 PreparedStatement pst = cn.prepareStatement("update equipos set tipo_equipo=?, marca=?, modelo=?,"
-                        + "num_serie=?, observaciones=?, estatus=?, ultima_modificacion=?" +"where id=equipo= '"+IDequipo + "'");
+                        + "num_serie=?, observaciones=?, estatus=?, ultima_modificacion=?" +"where id_equipo= '"+IDequipo + "'");
                 
                pst.setString(1, tipo_equipo);
                pst.setString(2, marca);
@@ -333,7 +333,7 @@ public class InformacionEquipo extends javax.swing.JFrame {
                pst.executeUpdate();
                cn.close();
                
-               Limpiar();
+               limpiar();
                
                JOptionPane.showMessageDialog(null, "Actualizacion correcta");
                this.dispose();
